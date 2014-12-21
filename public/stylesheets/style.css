@@ -68,13 +68,12 @@ p {
   font-size: 1rem; }
 
 h1.knight {
-  height: 122px;
-  width: 122px;
-  background: url("../images/knight.png") no-repeat;
-  margin: 2em auto 0.5em auto; }
+  height: 45px;
+  width: 45px;
+  background: url("../images/king.svg") no-repeat;
+  margin: 50px auto 10px; }
 
 h2 {
-  font-family: 'Cherry Swash';
   font-weight: 400;
   font-size: 2rem;
   text-align: center;
@@ -154,14 +153,14 @@ h3 {
 
 .chat {
   text-decoration: none;
-  color: #248a99;
+  color: #777;
   margin-right: 1em;
   line-height: 50px;
   float: right !important;
   cursor: pointer;
   font-weight: 600; }
   .chat:hover {
-    color: #299cad; }
+    color: #cecece; }
     .chat:hover .new-message {
       color: #d12521; }
   .chat img {
@@ -238,12 +237,13 @@ span#game-type {
   margin: 0 auto; }
   #form fieldset {
     border: 0;
-    text-align: right;
-    margin-bottom: 1em;
+    text-align: left;
+    margin-top: 1em;
+	margin-left: 250px;
     width: 80%; }
     #form fieldset input {
       margin-left: 1em;
-      width: 100px;
+      width: 60px;
       outline: none;
       height: 40px;
       line-height: 30px;
@@ -251,40 +251,34 @@ span#game-type {
       font-size: 1.125rem;
       color: #424242;
       border: 2px solid #2b222c;
-      border-left: 4px solid #2eafc2; }
+}
     #form fieldset label {
       position: relative; }
       #form fieldset label:before {
         position: absolute;
-        content: 'Up to 50';
+        content: '';
         top: 0;
         right: 2em;
         margin-top: -2.5em;
         font-size: 0.75rem; }
 
-input, button {
-  font-family: 'Open Sans'; }
 
 input.game_link {
-  width: 80%;
+  width: 70%;
   height: 50px;
   line-height: 50px;
   font-size: 1.125rem;
-  color: #fff;
-  border: 0;
-  border-bottom: 2px solid #2b222c;
-  border-left: 4px solid #2eafc2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #423443;
+  color: #000;
+  border: 2px solid #2b222c;
   padding: 0 1em;
-  float: left;
-  border-radius: 2px;
-  box-shadow: inset 0 -2px #2b222c; }
+  float: right;
+  margin-right:80px;
+  margin-bottom: 1em;
+}
 
 .game_link:hover {
-  background: #4a3b4c;
-  border-bottom: 2px solid #3a2d3a;
-  box-shadow: inset 0 -2px #3a2d3a;
+  background: #f1f1f1;
+  border: 2px solid #2b222c;
   -moz-transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
@@ -292,28 +286,23 @@ input.game_link {
   transition: all 0.2s ease-in-out; }
 
 .game_link:focus {
-  color: #eee; }
+  color: #222; }
 
 .button {
-  width: 15%;
-  height: 50px;
-  display: block;
-  font-size: 1.125rem;
-  border-radius: 2px;
-  border: 0;
-  border-bottom: 2px solid #299cad;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #2eafc2;
-  color: white;
-  cursor: pointer;
-  float: right;
-  box-shadow: inset 0 -2px #299cad;
-  position: relative; }
+	background: white;
+	width: 15%;
+	height: 50px;
+	display: block;
+	border: 2px solid #2b222c;
+	font-size: 1.125rem;
+	color: #000;
+	cursor: pointer;
+	float: right;
+	position: relative; 
+}
 
 .button:hover {
-  background: #39bdd0;
-  border-bottom: 2px solid #2ca8ba;
-  box-shadow: inset 0 -2px #2ca8ba;
+	background: #de322e;
   -moz-transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
@@ -336,14 +325,11 @@ a.button:hover {
   margin-right: 10px; }
 
 .button--red {
-  background: #d12521;
-  border-color: #bb211e;
-  box-shadow: inset 0 -2px #bb211e;
+  background: white;
+  border-color: #000;
   margin-right: 10px; }
   .button--red:hover {
     background: #de322e;
-    border-bottom: 2px solid #c82320;
-    box-shadow: inset 0 -2px #c82320;
     -moz-transition: all 0.2s ease-in-out;
     -webkit-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
@@ -354,12 +340,11 @@ a.button:hover {
   display: none; }
 
 p#waiting {
-  font-family: 'Cherry Swash';
   font-size: 1.275rem;
   color: #bb211e;
   width: 100%;
   text-align: center;
-  margin: 15px 0px 0px 0px;
+  margin: 10px 0px;
   display: none;
   float: left; }
 
@@ -399,7 +384,6 @@ footer {
   border: 4px solid #fff;
   background: #e6e3e0; }
   #chat-wrapper h4 {
-    font-family: 'Cherry Swash';
     font-size: 1.225rem;
     height: 3em;
     line-height: 3em;
@@ -522,7 +506,6 @@ table#moves {
   float: left; }
 
 #moves thead {
-  font-family: 'Cherry Swash';
   width: 270px;
   height: 3em;
   line-height: 3em;

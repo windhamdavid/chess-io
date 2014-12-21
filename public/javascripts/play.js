@@ -460,7 +460,7 @@ $(function() {
   $('#clock li').each(function() {
     $(this).text($time + ':00');
   });
-  $('#game-type').text($time + '|' + $increment);
+  $('#game-type').text($time + ' | ' + $increment);
 
   function movePieceFromHandler(e) {
     var piece = $(this);

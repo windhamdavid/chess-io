@@ -6,7 +6,7 @@ romanmatiasko/reti-chess)
 ```sh  
 npm install  
 node server.js  
-localhost:3000
+localhost:8888
 ```
 
 #####Built With

@@ -8,8 +8,7 @@ var express = require('express')
 var app = express();
 
 app.configure(function() {
-  app.set('ipaddress', process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
-  app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 3000);
+  app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8888);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -59,18 +58,6 @@ var server = http.createServer(app).listen(app.get('port'), app.get('ipaddress')
 var games = {};
 var timer;
 
-/** 
- * Winston logger
- */
-winston.add(winston.transports.File, {
-  filename: __dirname + '/logs/games.log',
-  handleExceptions: true,
-  exitOnError: false,
-  json: false
-});
-winston.remove(winston.transports.Console);
-winston.handleExceptions(new winston.transports.Console());
-winston.exitOnError = false;
 
 /**
  * Sockets
