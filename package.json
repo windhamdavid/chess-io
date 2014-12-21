@@ -5,11 +5,10 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "~4.x",
-    "jade": "~1.8.x",
-    "socket.io": "~1.2.x",
-    "winston": "~0.8.x,",
-	"twilio": "~1.10.x"
+    "express": "~3.3.0",
+    "jade": "~0.28.2",
+    "socket.io": "~0.9.16",
+    "winston": "~0.7.3"
   },
   "engines": {
     "node": ">=0.10.x"
