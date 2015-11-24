@@ -14,9 +14,16 @@ const CreateGameForm = React.createClass({
   render() {
     return (
       <form onSubmit={this.props.createGame}>
+			<input
+			 id="game-link"
+			 type="text"
+			 value={this.props.link || ''}
+			 onClick={e => e.target.select()}
+			 readOnly />
+			<button type="submit" className="btn">OK</button>
         <fieldset>
-          <label>
-            <span>Minutes per side: </span>
+          <label style={{paddingLeft: '2em'}}>
+            <span>minutes: </span>
             <input
               type="number"
               name="time"
@@ -27,7 +34,7 @@ const CreateGameForm = React.createClass({
               required />
           </label>
           <label style={{paddingLeft: '2em'}}>
-            <span>Increment in seconds: </span>
+            <span>increment: </span>
             <input
               type="number"
               name="inc"
@@ -38,13 +45,7 @@ const CreateGameForm = React.createClass({
               required />
           </label>
         </fieldset>
-        <input
-          id="game-link"
-          type="text"
-          value={this.props.link || 'Game link will be generated here.'}
-          onClick={e => e.target.select()}
-          readOnly />
-        <button type="submit" className="btn">Play</button>
+
       </form>
     );
   }

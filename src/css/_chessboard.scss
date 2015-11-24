@@ -10,21 +10,21 @@
   overflow-y: auto;
   width: 270px;
   height: 518px;
-  background: lighten($grey, 5%);
+  background: lighten($grey, 25%);
   box-shadow: inset 0 -4px $grey;
   margin-left: 10px;
   border-radius: 2px;
-  border-bottom: 4px solid $grey;
+  border: 1px solid $grey;
   display: block;
   float: left; 
 
   thead {
-    font-family: 'Cherry Swash', cursive;
+    font-family: Courier, Monaco, monospace;
     width: 270px;
     height: 3em;
     line-height: 3em;
     font-size: 1.225rem;
-    color: $dark-purple;
+    color: #424242;
     float: left;
     text-align: center;
 
@@ -59,7 +59,7 @@
 }
 
 .chessboard {
-  border: 8px solid lighten($dark-purple, 10%);
+  border: 8px solid lighten($black, 10%);
   border-radius: 2px;
   width: 500px;
   height: 500px;
@@ -82,8 +82,8 @@
       position: relative;
 
       &.moving, &.selected { background: lighten($red, 30%) !important; }
-      &.from { background: lighten($blue, 25%) !important; }
-      &.to { background: lighten($blue, 20%) !important; }
+      &.from { background: lighten($red, 35%) !important; }
+      &.to { background: lighten($red, 30%) !important; }
       &.droppable::after {
         position: absolute;
         content: "";

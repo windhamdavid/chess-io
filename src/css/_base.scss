@@ -1,3 +1,5 @@
+$white: #ffffff;
+$black: #000000;
 $dark-purple: #423443;
 $blue: #2eafc2;
 $red: #d12521;
@@ -89,8 +91,8 @@ button, input, select, textarea {
 }
 
 body, html {
-  color: #424242;
-  font-family: 'Open Sans', sans-serif;
+  color: #000;
+  font-family: Courier, Monaco, monospace;
   background: #fefefe;
   font-size: 16px;
   line-height: 1.5;
@@ -107,7 +109,7 @@ a {
   text-decoration: underline;
 
   &:hover { 
-    color: $blue;
+    color: $red;
     text-decoration: none; 
     transition: all 0.2s ease-in-out;
   }
@@ -127,11 +129,11 @@ strong {
 }
 
 h1 {
-  font-family: 'Cherry Swash', cursive;
+  font-family: Courier, Monaco, monospace;
   font-weight: 400;
   font-size: 2rem;
   text-align: center;
-  color: $dark-purple;
+  color: $black;
   margin-bottom: 0.5em;
 }
 
@@ -139,7 +141,7 @@ h2 {
   font-weight: 600;
   font-size: 1.5rem;
   margin: 1em 0 0.5em 0;
-  color: lighten($dark-purple, 5%);
+  color: black;
 }
 
 .clearfix { *zoom: 1;

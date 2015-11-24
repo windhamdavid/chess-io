@@ -59,7 +59,7 @@ const Index = React.createClass({
             {this.state.hasExpired ?
               'Game link has expired, generate a new one'
             :this.state.link ?
-              'Waiting for opponent to connect'
+              'Waiting for player to connect...'
             :null}
           </p>
         </div>

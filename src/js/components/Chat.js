@@ -41,7 +41,6 @@ const Chat = React.createClass({
       <div id="chat-wrapper"
            className={this.state.isChatHidden ? 'hidden' : null}>
         
-        <h4>Chat</h4>
         <a className="close"
            onClick={ChatActions.toggleVisibility}>
           x
@@ -59,7 +58,7 @@ const Chat = React.createClass({
           )).toArray()}
         </ul>
         
-        <span>Write your message:</span>
+        <span>message:</span>
         
         <form id="chat-form"
               onSubmit={this._submitMessage}>

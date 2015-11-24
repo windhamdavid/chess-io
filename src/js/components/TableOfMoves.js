@@ -16,11 +16,6 @@ const TableOfMoves = React.createClass({
   render() {
     return (
       <table id="moves" className="clearfix">
-        <thead>
-          <tr>
-            <th>Table of moves</th>
-          </tr>
-        </thead>
         <tbody>
           {this.state.moves.map((row, i) => (
             <tr key={i}>
