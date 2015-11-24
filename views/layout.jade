@@ -4,7 +4,7 @@ html(lang='en')
     - if (typeof(title) !== 'undefined')
       title #{title} | Chess | David A. Windham
     - else
-      title Reti Chess
+      title Chess vs. David
     meta(charset='utf-8')
     meta(name='robots', content='index, follow')
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -18,10 +18,7 @@ html(lang='en')
         
     footer
       #footer.clearfix
-        p.center 2015&nbsp;&nbsp;&ndash;&nbsp;&nbsp;Reti Chess is distributed under 
-          a(href='http://github.com/romanmatiasko/reti-chess/blob/master/LICENSE.md') the MIT License
-          | &nbsp;&nbsp;&ndash;&nbsp;&nbsp;
-          a(href='http://github.com/romanmatiasko/reti-chess') Github
+        p.center 
 
     - if (process.env.NODE_ENV === 'development')
       script(src='/js/vendor.js')

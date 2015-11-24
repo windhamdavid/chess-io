@@ -41,11 +41,11 @@ const Index = React.createClass({
   render() {
     return (
       <div>
-        <img src="/img/knight.png"
-             width="122"
-             height="122"
+        <img src="/img/king.svg"
+             width="50"
+             height="50"
              className="knight" />
-        <h1>Reti Chess</h1>
+        <h1>How about a nice game of chess?</h1>
 
         <div id="create-game">
           <CreateGameForm
@@ -63,15 +63,6 @@ const Index = React.createClass({
             :null}
           </p>
         </div>
-
-        <p>
-          Click the button to create a game. Send the link to your friend.
-          Once the link is opened your friend‘s browser, game should begin 
-          shortly. Colors are picked randomly by computer.
-        </p>
-        <p>
-          <a href="/about" className="alpha">Read more about Reti Chess</a>
-        </p>
       </div>
     );
   },

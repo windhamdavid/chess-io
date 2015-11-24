@@ -45,7 +45,7 @@ npm run build
 npm test
 ```
 
-* App will run on **localhost:3000**
+* App will run on **localhost:8888**
 
 License
 -------
