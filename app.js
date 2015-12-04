@@ -14,7 +14,7 @@ const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(favicon(path.join(__dirname, rootDir + '/img/favicon.png')));
+app.use(favicon(path.join(__dirname, rootDir + '/img/favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
