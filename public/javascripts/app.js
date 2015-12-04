@@ -2,7 +2,7 @@ var $URL, $socket;
   
 $(function () {
   //var ENV = 'code';
-  var ENV = 'dev';
+  //var ENV = 'dev';
   var $WS;
 
   if (ENV === 'dev') {
