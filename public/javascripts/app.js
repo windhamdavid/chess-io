@@ -1,6 +1,7 @@
 var $URL, $socket;
   
 $(function () {
+  //var ENV = 'chess';
   //var ENV = 'code';
   //var ENV = 'dev';
   var $WS;
