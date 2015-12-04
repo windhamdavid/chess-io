@@ -6,7 +6,7 @@ $(function () {
   var $WS;
 
   if (ENV === 'dev') {
-    $URL = 'http://macs.local:8888';
+    $URL = 'http://127.0.0.1:8181';
     $WS = $URL;
   } else if (ENV === 'code') {
     $URL = 'http://code.davidawindham.com:8888';
