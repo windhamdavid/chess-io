@@ -11,6 +11,9 @@ $(function () {
   } else if (ENV === 'code') {
     $URL = 'http://code.davidawindham.com:8888';
     $WS = 'ws://code.davidawindham.com:8888/';
+  } else if (ENV === 'chess') {
+    $URL = 'http://chess.davidawindham.com:8181';
+    $WS = 'ws://code.davidawindham.com:8888/';
   }
 
   $socket = io.connect($WS);
