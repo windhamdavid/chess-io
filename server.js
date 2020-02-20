@@ -1,4 +1,11 @@
 var express = require('express')
+  , favicon = require('serve-favicon')
+  , bodyParser = require('body-parser')
+  , logger = require('morgan')
+  , cookieParser = require('cookie-parser')
+  , session = require('express-session')
+  , methodOverride = require('express-method-override')
+  , errorhandler = require('errorhandler')
   , path    = require('path')
   , crypto  = require('crypto')
   , http    = require('http')
@@ -7,23 +14,21 @@ var express = require('express')
 
 var app = express();
 
-app.configure(function() {
+
   app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8181);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('45710b553b5b7293753d03bd3601f70a'));
-  app.use(express.session());
-  app.use(app.router);
+  //app.use(favicon());
+  //app.use(logger('dev'));
+  app.use(bodyParser());
+  app.use(methodOverride());
+  app.use(cookieParser('45710b553b5b7293753d03bd3601f70a'));
+  app.use(session());
+  //app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
-});
+  
+  //app.use(errorHandler());
 
-app.configure('development', function() {
-  app.use(express.errorHandler());
-});
 
 app.get('/', function(req, res) {
   res.render('index');

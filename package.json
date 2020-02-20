@@ -1,16 +1,23 @@
 {
   "name": "chess-io",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "~3.3.0",
-    "jade": "~0.28.2",
-    "socket.io": "~0.9.16",
-    "winston": "~0.7.3"
+    "express": "~4.17.1",
+    "serve-favicon": "~2.5.0",
+    "express-method-override": "~0.0.3",
+    "morgan": "~1.9.1",
+    "cookie-parser": "~1.4.4",
+    "express-session": "~1.17.0",
+    "errorhandler": "~1.5.1",
+    "body-parser": "~1.19.0",
+    "jade": "~1.11.0",
+    "socket.io": "~2.3.0",
+    "winston": "~3.2.1"
   },
   "engines": {
-    "node": ">=0.10.x"
+    "node": ">=0.8.x"
   }
 }
