@@ -1,7 +1,7 @@
 var $URL, $socket;
   
 $(function () {
-  //var ENV = 'chess';
+  var ENV = 'chess';
   //var ENV = 'code';
   //var ENV = 'dev';
   var $WS;
@@ -13,7 +13,7 @@ $(function () {
     $URL = 'http://code.davidawindham.com:8888';
     $WS = 'ws://code.davidawindham.com:8888/';
   } else if (ENV === 'chess') {
-    $URL = 'http://chess.davidawindham.com:8181';
+    $URL = 'http://chess.davidawindham.com';
     $WS = 'ws://chess.davidawindham.com:8181/';
   }
 
