@@ -1,7 +1,6 @@
 ### Chess-IO
 
-my fork of [Reti-Chess](https://github.com/
-romanmatiasko/reti-chess)
+my fork of [Reti-Chess](https://github.com/romanmatiasko/reti-chess)
 
 ```sh  
 npm install  
