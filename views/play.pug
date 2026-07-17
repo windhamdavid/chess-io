@@ -1,10 +1,15 @@
 extends layout
 
 block head
-  script(type='text/javascript')
-    $token = '#{token}';
-    $time = #{time};
-    $increment = #{increment};
+  //- JSON.stringify, not #{}, so these are emitted as JS literals rather than
+  //- pasted into JS source. The server already rejects anything that isn't a
+  //- real token / integer (see the /play route); this is the second layer --
+  //- Pug's HTML escaping is no defense in a script block, where a numeric
+  //- payload like `1;alert(1)` needs no HTML characters to run.
+  script.
+    var $token = !{JSON.stringify(token)};
+    var $time = !{JSON.stringify(time)};
+    var $increment = !{JSON.stringify(increment)};
 
 block content
   header.clearfix
@@ -12,17 +17,17 @@ block content
       li.white
       li.black
     span#game-type
-    a.button(href='/') New game
+    a.button(href=`${basePath}/`) New game
     a.button.button--red.resign Resign
     a.button.button--red.rematch Rematch
     a.chat
-      img#bubble(src='/images/chat.svg', width='50', height='50')
+      img#bubble(src=`${basePath}/images/chat.svg`, width='50', height='50')
       | Chat
   audio(id='moveSnd', preload='auto')
-    source(src='/sounds/move.mp3')
-    source(src='/sounds/move.ogg')
+    source(src=`${basePath}/sounds/move.mp3`)
+    source(src=`${basePath}/sounds/move.ogg`)
   audio(id='messageSnd', preload='auto')
-    source(src='/sounds/message.mp3')
+    source(src=`${basePath}/sounds/message.mp3`)
 
   #chat-wrapper
     h4 Chat
@@ -271,4 +276,4 @@ block content
       span.feedback-status
 
 block scripts
-  script(type='text/javascript', src='/javascripts/play.js')
+  script(type='text/javascript', src=`${basePath}/javascripts/play.js`)

@@ -3,3 +3,4 @@ public/stylesheets/.sass-cache/
 node_modules/
 logs/
 npm-debug.log
+.env

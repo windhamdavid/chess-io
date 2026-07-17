@@ -1,23 +1,22 @@
 {
   "name": "chess-io",
-  "version": "0.0.2",
+  "author": "windhamdavid",
+  "description": "real-time chess over socket.io",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch --env-file-if-exists=.env server.js",
+    "lint": "node --check server.js"
   },
   "dependencies": {
-    "express": "~4.17.1",
-    "serve-favicon": "~2.5.0",
-    "express-method-override": "~0.0.3",
-    "morgan": "~1.9.1",
-    "cookie-parser": "~1.4.4",
-    "express-session": "~1.17.0",
-    "errorhandler": "~1.5.1",
-    "body-parser": "~1.19.0",
-    "jade": "~1.11.0",
-    "socket.io": "~2.3.0",
-    "winston": "~3.2.1"
-  },
-  "engines": {
-    "node": ">=0.8.x"
+    "express": "^5.2.1",
+    "pug": "^3.0.3",
+    "socket.io": "^4.8.3",
+    "winston": "^3.19.0"
   }
 }

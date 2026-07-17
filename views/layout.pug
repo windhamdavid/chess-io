@@ -1,0 +1,58 @@
+doctype html
+html(lang='en')
+  head
+    - if (typeof(title) !== 'undefined')
+      title #{title} | Chess
+    - else
+      title Chess | David Windham
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='shortcut icon', href=`${basePath}/images/favicon.ico`)
+    link(rel='stylesheet', href=`${basePath}/stylesheets/style.css`)
+    //- After style.css: pulls the page onto the daw slate/card palette so the
+    //- shared chrome blends. See the header of that file re: style.scss.
+    link(rel='stylesheet', href=`${basePath}/stylesheets/daw.css`)
+    //- Where the app is mounted, handed to the client so it can build socket
+    //- and game-link URLs without any host or port baked in. See app.js.
+    script.
+      window.$BASE = !{JSON.stringify(basePath)};
+    script(type='text/javascript', src=`${basePath}/socket.io/socket.io.js`)
+    block head
+  body
+    daw-header
+
+    #modal-mask
+      p
+        strong Esc:
+        |  OK
+        br
+        strong Enter:
+        |  OK
+      #modal-window
+        p#modal-message Message.
+        a#modal-ok.button(href='#') OK
+    #offer-mask
+      p
+        strong Esc:
+        |  Decline
+        br
+        strong Enter:
+        |  Accept
+      #offer-window
+        p#offer-message Offer.
+        a#offer-accept.button(href='#') Accept
+        a#offer-decline.button.button--red(href='#') Decline
+
+    #container_wrapper.clearfix
+      #container.clearfix
+        block content
+
+    daw-footer
+
+    script(type='text/javascript', src=`${basePath}/javascripts/jquery.js`)
+    script(type='text/javascript', src=`${basePath}/javascripts/chess.js`)
+    script(type='text/javascript', src=`${basePath}/javascripts/app.js`)
+    block scripts
+    //- Root-relative on purpose: Apache serves /embed from the WP docroot in
+    //- production, alongside /chess. Locally, set DAW_ORIGIN so node proxies it.
+    script(src='/embed/chrome.js')

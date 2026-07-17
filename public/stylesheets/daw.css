@@ -1,0 +1,54 @@
+/* daw integration layer -- everything that pulls chess onto the main site's look.
+ *
+ * Loaded after style.css (see views/layout.pug) and kept separate from it on
+ * purpose: it isolates the migration delta. What's here is "make chess look like
+ * the rest of davidwindham.com"; what's in style.css is the game's own design.
+ *
+ * (There used to be a style.scss source too, but it had drifted years out of
+ * sync with the shipped style.css -- different button, different palette -- with
+ * no build step in the repo, so it was deleted. style.css is now edited directly.)
+ *
+ * Palette matches /rtc and /photo: slate #484c57 body, #dadada content card.
+ * The shared header in /embed/chrome.js paints rgba(72,76,87,.7), so it only
+ * blends into the page at this exact body colour -- on the old #fefefe it read
+ * as a mismatched grey band.
+ */
+
+body,
+html {
+  background: #484c57;
+}
+
+/* Outer gutter matches the chrome's 1180px column; the card itself stays at the
+ * 960px the game was actually designed for (board 456px + move table), so the
+ * board doesn't sit against a wide empty margin.
+ */
+#container_wrapper {
+  max-width: 1180px;
+  padding: 0 20px 4rem;
+}
+
+/* The card. min-height/float come from style.css's #container and are cleared
+ * here: the card should size to the game, and floating it left kept the footer
+ * from clearing it properly.
+ */
+#container {
+  background: #dadada;
+  color: #232323;
+  border-radius: 6px;
+  max-width: 960px;
+  padding: 3rem 2rem;
+  margin: 2rem auto 0;
+  min-height: 0;
+  float: none;
+}
+
+/* Selection colour lands on the slate now, not on white. */
+::-moz-selection {
+  background: #25c2a0;
+  color: #fefefe;
+}
+::selection {
+  background: #25c2a0;
+  color: #fefefe;
+}
