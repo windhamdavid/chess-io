@@ -4,3 +4,4 @@ node_modules/
 logs/
 npm-debug.log
 .env
+_claude/
