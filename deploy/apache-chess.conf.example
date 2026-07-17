@@ -1,10 +1,9 @@
 # chess-io — reverse proxy for davidwindham.com/chess
 # ============================================================================
 #
-# The chess app is a long-running Node process (see the systemd unit below). It
-# is NOT served from the web docroot like the PHP/WordPress parts of the site —
-# Apache proxies /chess through to node on 127.0.0.1:8181, exactly the way
-# /radio is already wired.
+# The chess app is a long-running Node process (see chess-io.service.example).
+# It is NOT served from the web docroot like the PHP/WordPress parts of the
+# site — Apache proxies /chess through to node on 127.0.0.1:8181.
 #
 # Add the block below to the EXISTING davidwindham.com <VirtualHost> (the same
 # one that serves WordPress). Do NOT create a new vhost for it — /chess has to
@@ -12,32 +11,69 @@
 # that is what lets the client open its websocket with no hardcoded host and
 # keeps it from tripping mixed-content blocking on https.
 #
-# ---------------------------------------------------------------------------
-# Requirements
-# ---------------------------------------------------------------------------
-#
-# 1. Apache 2.4.47 or newer. The `upgrade=websocket` option on ProxyPass is what
-#    carries the socket.io websocket; it was added in 2.4.47. Check with:
-#        httpd -v          (or: apachectl -v)
-#
-# 2. These modules enabled:
-#        a2enmod proxy proxy_http proxy_wstunnel rewrite
-#    (proxy_wstunnel is not strictly used by `upgrade=websocket`, but enabling
-#    it does no harm and covers older config styles.)
-#
-# 3. The node app running with BASE_PATH=/chess and TRUST_PROXY=1 — see the
-#    systemd unit at the bottom. The /chess prefix is kept on BOTH sides of the
-#    ProxyPass on purpose: the app is mounted at /chess and expects to see it.
+# This REPLACES the old chess.davidwindham.com subdomain vhost, which
+# root-mounted the app ("ProxyPass / http://127.0.0.1:8181/") on its own
+# hostname. Two differences now that it's a subpath:
+#   - socket.io lives at /chess/socket.io, not /socket.io
+#   - the /chess prefix is KEPT on the way to node (BASE_PATH=/chess), where the
+#     old root mount had nothing to keep.
 #
 # ---------------------------------------------------------------------------
-# Paste inside <VirtualHost *:443> for davidwindham.com (and *:80 if you keep
-# a plain-http vhost that isn't a blanket redirect to https).
+# Which option? Check your Apache version first:
+#     apache2 -v      (or: apachectl -v  /  httpd -v)
 # ---------------------------------------------------------------------------
+#
+# >= 2.4.47  ->  Option A. One line carries both HTTP and the websocket.
+# <  2.4.47  ->  Option B. ProxyPass for HTTP + a mod_rewrite rule for the
+#                websocket upgrade (the same technique the old subdomain vhost
+#                used, adapted to the /chess subpath).
+#
+# Use ONE option, not both. Modules needed either way:
+#     a2enmod proxy proxy_http rewrite
+# Option A additionally: nothing. Option B additionally: proxy_wstunnel.
+#
+# The node app must be running with BASE_PATH=/chess and TRUST_PROXY=1 — see
+# chess-io.service.example.
+
+# ===========================================================================
+# OPTION A — Apache 2.4.47+  (preferred)
+# ===========================================================================
+# Paste inside <VirtualHost *:443> for davidwindham.com.
+
+    ProxyPreserveHost On
 
     # chess: real-time chess on node, mounted at /chess.
     # Prefix kept on both sides; BASE_PATH=/chess tells the app to expect it.
-    # upgrade=websocket carries socket.io at /chess/socket.io (needs httpd 2.4.47+).
+    # upgrade=websocket carries socket.io at /chess/socket.io (needs 2.4.47+).
     ProxyPass         /chess  http://127.0.0.1:8181/chess  upgrade=websocket
+    ProxyPassReverse  /chess  http://127.0.0.1:8181/chess
+
+
+# ===========================================================================
+# OPTION B — Apache < 2.4.47  (mod_rewrite fallback)
+# ===========================================================================
+# Use this INSTEAD of Option A if your Apache predates upgrade=websocket
+# (e.g. Ubuntu 20.04 ships 2.4.41, Debian 10 ships 2.4.38).
+#
+# The RewriteRule must appear before the ProxyPass. The two RewriteConds gate
+# it to genuine websocket-upgrade requests only; everything else — page loads,
+# static assets, socket.io's HTTP long-polling — falls through to ProxyPass.
+#
+# This matches on the Upgrade/Connection headers, which is more robust than the
+# old "?transport=websocket" query-string test but does the same job. If you
+# prefer to mirror the old vhost exactly, the query-string form also works:
+#     RewriteCond %{REQUEST_URI}  ^/chess/socket.io  [NC]
+#     RewriteCond %{QUERY_STRING} transport=websocket [NC]
+#     RewriteRule /(.*) ws://127.0.0.1:8181/$1 [P,L]
+
+    ProxyPreserveHost On
+
+    RewriteEngine On
+    RewriteCond %{HTTP:Upgrade}    =websocket [NC]
+    RewriteCond %{HTTP:Connection} upgrade    [NC]
+    RewriteRule ^/chess/(.*) ws://127.0.0.1:8181/chess/$1 [P,L]
+
+    ProxyPass         /chess  http://127.0.0.1:8181/chess
     ProxyPassReverse  /chess  http://127.0.0.1:8181/chess
 
 # ---------------------------------------------------------------------------
@@ -52,6 +88,16 @@
 # * No trailing-slash rule is needed in Apache: the app itself 301s /chess to
 #   /chess/ so relative asset URLs resolve.
 #
-# * If the old chess.davidawindham.com subdomain vhost is still live, point it
-#   at a redirect to https://davidwindham.com/chess/ once this is confirmed
-#   working, so old game links don't dead-end.
+# * Optional, from the old vhost: it served a friendly 503 page when node was
+#   down ("ProxyPass /error/ !" + "ErrorDocument 503 /error/503.html"). Under
+#   the main site vhost that's optional — WordPress's own error handling covers
+#   it — but you can keep the pattern if you want a chess-specific down page.
+#
+# * Point the old chess.davidwindham.com subdomain at a redirect to
+#   https://davidwindham.com/chess/ once this is confirmed working, so old game
+#   links don't dead-end:
+#       <VirtualHost *:80>
+#         ServerName chess.davidwindham.com
+#         ServerAlias www.chess.davidwindham.com
+#         Redirect permanent / https://davidwindham.com/chess/
+#       </VirtualHost>
