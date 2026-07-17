@@ -99,3 +99,11 @@ All relative to `BASE_PATH`.
 - **Node 24.** Runs on the same 24.x as the server. The pre-migration tree
   (Express 4 / socket.io 2 / jade) also booted on 24 — the upgrade was for
   support and security, not because 24 forced it.
+
+## History
+
+- 2015 — original fork of Reti-Chess.
+- 2020 — reworked toward Express 5.
+- May 2022 — merged `_old` back into `master`, still on the old fork.
+- July 2026 — modernized (Express 5 / socket.io 4 / Pug) and mounted under
+  `davidwindham.com/chess` with the shared site chrome.
