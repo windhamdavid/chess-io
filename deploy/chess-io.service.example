@@ -1,0 +1,37 @@
+# systemd unit for the chess-io node app — /etc/systemd/system/chess-io.service
+# ============================================================================
+#
+# Runs the app as a long-lived service behind Apache (see apache-chess.conf.example).
+# Adjust User/Group and WorkingDirectory to match where the repo is checked out
+# on the server, then:
+#
+#     sudo cp deploy/chess-io.service.example /etc/systemd/system/chess-io.service
+#     sudo systemctl daemon-reload
+#     sudo systemctl enable --now chess-io
+#     systemctl status chess-io
+#     journalctl -u chess-io -f          # logs (boot/config + game counts)
+#
+# On deploy of new code: git pull && npm ci && sudo systemctl restart chess-io
+
+[Unit]
+Description=chess-io (real-time chess, node + socket.io)
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/chess-io
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=2
+
+# Config. Mirrors .env.example. DAW_ORIGIN is intentionally absent — it is a
+# local-dev-only shim for the shared chrome and must NOT be set in production.
+Environment=NODE_ENV=production
+Environment=PORT=8181
+Environment=BASE_PATH=/chess
+Environment=TRUST_PROXY=1
+
+[Install]
+WantedBy=multi-user.target

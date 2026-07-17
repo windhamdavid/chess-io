@@ -1,0 +1,57 @@
+# chess-io — reverse proxy for davidwindham.com/chess
+# ============================================================================
+#
+# The chess app is a long-running Node process (see the systemd unit below). It
+# is NOT served from the web docroot like the PHP/WordPress parts of the site —
+# Apache proxies /chess through to node on 127.0.0.1:8181, exactly the way
+# /radio is already wired.
+#
+# Add the block below to the EXISTING davidwindham.com <VirtualHost> (the same
+# one that serves WordPress). Do NOT create a new vhost for it — /chess has to
+# live under the main hostname so it is same-origin with the rest of the site;
+# that is what lets the client open its websocket with no hardcoded host and
+# keeps it from tripping mixed-content blocking on https.
+#
+# ---------------------------------------------------------------------------
+# Requirements
+# ---------------------------------------------------------------------------
+#
+# 1. Apache 2.4.47 or newer. The `upgrade=websocket` option on ProxyPass is what
+#    carries the socket.io websocket; it was added in 2.4.47. Check with:
+#        httpd -v          (or: apachectl -v)
+#
+# 2. These modules enabled:
+#        a2enmod proxy proxy_http proxy_wstunnel rewrite
+#    (proxy_wstunnel is not strictly used by `upgrade=websocket`, but enabling
+#    it does no harm and covers older config styles.)
+#
+# 3. The node app running with BASE_PATH=/chess and TRUST_PROXY=1 — see the
+#    systemd unit at the bottom. The /chess prefix is kept on BOTH sides of the
+#    ProxyPass on purpose: the app is mounted at /chess and expects to see it.
+#
+# ---------------------------------------------------------------------------
+# Paste inside <VirtualHost *:443> for davidwindham.com (and *:80 if you keep
+# a plain-http vhost that isn't a blanket redirect to https).
+# ---------------------------------------------------------------------------
+
+    # chess: real-time chess on node, mounted at /chess.
+    # Prefix kept on both sides; BASE_PATH=/chess tells the app to expect it.
+    # upgrade=websocket carries socket.io at /chess/socket.io (needs httpd 2.4.47+).
+    ProxyPass         /chess  http://127.0.0.1:8181/chess  upgrade=websocket
+    ProxyPassReverse  /chess  http://127.0.0.1:8181/chess
+
+# ---------------------------------------------------------------------------
+# Notes
+# ---------------------------------------------------------------------------
+#
+# * /embed/chrome.js (the shared header/footer) is served by Apache from the
+#   WordPress docroot, NOT by this app. Nothing to configure here for it — the
+#   page loads it root-relative and it already resolves alongside /chess.
+#   DAW_ORIGIN is a LOCAL-DEV-ONLY shim and must stay UNSET in production.
+#
+# * No trailing-slash rule is needed in Apache: the app itself 301s /chess to
+#   /chess/ so relative asset URLs resolve.
+#
+# * If the old chess.davidawindham.com subdomain vhost is still live, point it
+#   at a redirect to https://davidwindham.com/chess/ once this is confirmed
+#   working, so old game links don't dead-end.
